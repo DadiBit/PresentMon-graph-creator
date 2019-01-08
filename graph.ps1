@@ -1,7 +1,12 @@
-$file=Read-Host -Prompt 'Csv file name'
-if (!$file) {$file='graph.csv'}
-$title=Read-Host -Prompt 'Title name'
-$csv=import-csv $file
+param (
+	[string]$InFile=$(if(!$(Read-Host -Prompt 'Csv file name')){'graph.csv'}),
+	[string]$OutFile="graph.png",
+	[string]$title=$(Read-Host -Prompt 'Title name')
+)
+if (!$(split-path $OutFile -IsAbsolute)) {
+	$OutFile=$($ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("$OutFile"))
+}
+$csv=import-csv $InFile
 $raw=0
 $tot=0
 $min=0
@@ -16,7 +21,6 @@ $csv | foreach-object {
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Windows.Forms
 
-$graph="$pwd\graph.png"
 if ($title) {
 $bmp=new-object System.Drawing.Bitmap 1000,350
 } else {
@@ -30,10 +34,11 @@ $fontTx = new-object System.Drawing.Font Arial,25
 
 $graphics = [System.Drawing.Graphics]::FromImage($bmp)
 
+$graphics.FillRectangle($brushBg,0,0,$bmp.Width,$bmp.Height)
+
 if ($title) {
 $brushTl = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255,0,0,0))
 $fontTl = new-object System.Drawing.Font Arial,25
-$graphics.FillRectangle($brushBg,0,0,$bmp.Width,$bmp.Height)
 $graphics.FillRectangle($brushGp,250,0,500,50)
 $graphics.FillEllipse($brushGp,225,0,50,50)
 $graphics.FillEllipse($brushGp,725,0,50,50)
@@ -52,9 +57,9 @@ $graphics.FillRectangle($brushGp,175,$offset+175,($bmp.Width-300)/$max*$min,50)
 $graphics.DrawString('Minimum: ',$fontTx,$brushTx,10,$offset+175+25-(([System.Windows.Forms.TextRenderer]::MeasureText($min,$fontTx)).height/2))
 $graphics.DrawString([math]::Round($min,1),$fontTx,$brushTx,175+(($bmp.Width-300)/$max*$min),$offset+175+25-(([System.Windows.Forms.TextRenderer]::MeasureText($min,$fontTx)).height/2))
 $graphics.Dispose()
-$bmp.Save($graph)
+$bmp.Save($OutFile)
 
-Invoke-Item $graph
+Invoke-Item $OutFile
 
 echo "$($bar)"
 echo "Avarage: $($tot/$raw)"
