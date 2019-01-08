@@ -1,7 +1,7 @@
 param (
 	[string]$InFile=$(if(!$(Read-Host -Prompt 'Csv file name')){'graph.csv'}),
 	[string]$OutFile="graph.png",
-	[string]$title=$(Read-Host -Prompt 'Title name')
+	[string]$Title=$(Read-Host -Prompt 'Title name')
 )
 if (!$(split-path $OutFile -IsAbsolute)) {
 	$OutFile=$($ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("$OutFile"))
@@ -21,7 +21,7 @@ $csv | foreach-object {
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Windows.Forms
 
-if ($title) {
+if ($Title) {
 $bmp=new-object System.Drawing.Bitmap 1000,350
 } else {
 $bmp=new-object System.Drawing.Bitmap 1000,250
@@ -36,13 +36,13 @@ $graphics = [System.Drawing.Graphics]::FromImage($bmp)
 
 $graphics.FillRectangle($brushBg,0,0,$bmp.Width,$bmp.Height)
 
-if ($title) {
+if ($Title) {
 $brushTl = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255,0,0,0))
 $fontTl = new-object System.Drawing.Font Arial,25
 $graphics.FillRectangle($brushGp,250,0,500,50)
 $graphics.FillEllipse($brushGp,225,0,50,50)
 $graphics.FillEllipse($brushGp,725,0,50,50)
-$graphics.DrawString($title,$fontTl,$brushTl,250+250-(([System.Windows.Forms.TextRenderer]::MeasureText($title,$fontTl)).width/2),0+25-(([System.Windows.Forms.TextRenderer]::MeasureText($title,$fontTl)).height/2))
+$graphics.DrawString($Title,$fontTl,$brushTl,250+250-(([System.Windows.Forms.TextRenderer]::MeasureText($Title,$fontTl)).width/2),0+25-(([System.Windows.Forms.TextRenderer]::MeasureText($Title,$fontTl)).height/2))
 $offset=100
 }
 
