@@ -31,11 +31,8 @@ $brushLn = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255
 $brushGp = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255,75,125,75))
 $brushTx = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255,0,0,0))
 $fontTx = new-object System.Drawing.Font Arial,25
-
 $graphics = [System.Drawing.Graphics]::FromImage($bmp)
-
 $graphics.FillRectangle($brushBg,0,0,$bmp.Width,$bmp.Height)
-
 if ($Title) {
 $brushTl = [System.Drawing.SolidBrush]::New([System.Drawing.Color]::FromArgb(255,0,0,0))
 $fontTl = new-object System.Drawing.Font Arial,25
@@ -45,7 +42,6 @@ $graphics.FillEllipse($brushGp,725,0,50,50)
 $graphics.DrawString($Title,$fontTl,$brushTl,250+250-(([System.Windows.Forms.TextRenderer]::MeasureText($Title,$fontTl)).width/2),0+25-(([System.Windows.Forms.TextRenderer]::MeasureText($Title,$fontTl)).height/2))
 $offset=100
 }
-
 $graphics.FillRectangle($brushLn,172,$offset+10,3,230)
 $graphics.FillRectangle($brushGp,175,$offset+25,($bmp.Width-300)/$max*($tot/$raw),50)
 $graphics.DrawString('Avarage: ',$fontTx,$brushTx,10,$offset+25+25-(([System.Windows.Forms.TextRenderer]::MeasureText($tot/$raw,$fontTx)).height/2))
@@ -58,9 +54,7 @@ $graphics.DrawString('Minimum: ',$fontTx,$brushTx,10,$offset+175+25-(([System.Wi
 $graphics.DrawString([math]::Round($min,1),$fontTx,$brushTx,175+(($bmp.Width-300)/$max*$min),$offset+175+25-(([System.Windows.Forms.TextRenderer]::MeasureText($min,$fontTx)).height/2))
 $graphics.Dispose()
 $bmp.Save($OutFile)
-
 Invoke-Item $OutFile
-
 echo "$($bar)"
 echo "Avarage: $($tot/$raw)"
 echo "Maximum: $($max)"
