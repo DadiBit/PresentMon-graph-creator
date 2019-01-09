@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<configuration>
+	<BaseSettings>
+	</BaseSettings>
+	<AdvancedSettings>
+		<brush>
+			<ImageBackground>0,0,0,0</ImageBackground>
+			<GridlineBackground>255,127,127,127</GridlineBackground>
+			<BarBackground>255,75,125,75</BarBackground>
+		</brush>
+	</AdvancedSettings>
+</configuration>
