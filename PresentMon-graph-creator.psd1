@@ -1,0 +1,15 @@
+@{
+	basic=@{
+		InFile='graph.csv'
+		OutFile='graph.png'
+	}
+	advanced=@{
+		ImageBackground='0,0,0,0'
+		GridlineBackground='255,127,127,127'
+		BarBackground='255,75,125,75'
+		LabelText='255,0,0,0'
+		TitleText='255,0,0,0'
+		TitleBackground='255,75,125,75'
+		TitleType=0
+	}
+}
