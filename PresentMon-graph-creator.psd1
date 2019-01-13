@@ -4,6 +4,11 @@
 		OutFile='graph.png'
 	}
 	advanced=@{
+		Animation=@{
+			FrameTime=60
+			Seconds=3
+			AnimationType=0
+		}
 		ImageBackground='0,0,0,0'
 		GridlineBackground='255,127,127,127'
 		BarBackground='255,75,125,75'
